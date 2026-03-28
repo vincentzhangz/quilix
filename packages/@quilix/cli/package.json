@@ -1,0 +1,23 @@
+{
+  "name": "@quilix/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Quilix CLI - Development toolchain for Quilix applications",
+  "main": "./bin/cli.js",
+  "bin": {
+    "quilix": "./bin/cli.js"
+  },
+  "scripts": {
+    "postinstall": "node ./bin/postinstall.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vincentzhangz/quilix.git",
+    "directory": "packages/@quilix/cli"
+  },
+  "keywords": ["quilix", "cli", "rspack", "module-federation"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
