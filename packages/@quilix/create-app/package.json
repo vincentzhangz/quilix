@@ -1,6 +1,6 @@
 {
   "name": "@quilix/create-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Create Quilix apps scaffolding",
   "main": "./templates/index.js",
