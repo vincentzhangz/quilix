@@ -1,0 +1,21 @@
+{
+  "name": "@quilix/create-app",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Create Quilix apps scaffolding",
+  "main": "./templates/index.js",
+  "scripts": {
+    "build": "echo 'No build step required'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vincentzhangz/quilix.git",
+    "directory": "packages/@quilix/create-app"
+  },
+  "keywords": ["quilix", "scaffold", "create-app"],
+  "license": "MIT",
+  "bin": {
+    "create-quilix-app": "./bin/index.js"
+  },
+  "files": ["templates", "bin"]
+}

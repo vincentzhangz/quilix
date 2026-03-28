@@ -1,0 +1,6 @@
+packages:
+  - 'packages/*'
+  - 'packages/@quilix/*'
+  - 'examples/basic'
+  - 'examples/micro-fe/host'
+  - 'examples/micro-fe/remote'

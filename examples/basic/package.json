@@ -1,0 +1,31 @@
+{
+  "name": "quilix-basic-example",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "quilix dev",
+    "build": "quilix build",
+    "start": "quilix start",
+    "preview": "quilix preview",
+    "lint": "quilix lint"
+  },
+  "dependencies": {
+    "@quilix/core": "workspace:*",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.9",
+    "@rspack/cli": "^1.0.0",
+    "@rspack/core": "^1.7.10",
+    "@rspack/plugin-html": "^0.5.8",
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "postcss": "^8.5.8",
+    "postcss-loader": "^8.2.1",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.9.3"
+  }
+}

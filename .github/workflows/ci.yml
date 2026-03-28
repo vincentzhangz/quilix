@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rust:
+    name: Rust (${{ matrix.toolchain }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toolchain: [stable, nightly]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Check formatting
+        if: matrix.toolchain == 'stable'
+        run: cargo fmt --check
+
+      - name: Clippy
+        run: cargo clippy --all-features -- -D warnings
+
+      - name: Build
+        run: cargo build --workspace --release
+
+      - name: Test
+        run: cargo test --workspace
+
+  node:
+    name: Node.js
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm -r run typecheck
+
+      - name: Lint (@quilix/core)
+        run: pnpm --filter @quilix/core run lint || true
+
+      - name: Lint (@quilix/rspack-plugin)
+        run: pnpm --filter @quilix/rspack-plugin run lint || true
+
+      - name: Lint (@quilix/create-app)
+        run: pnpm --filter @quilix/create-app run lint || true

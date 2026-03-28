@@ -1,0 +1,31 @@
+[package]
+name = "quilix-cli"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "quilix"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+axum.workspace = true
+clap.workspace = true
+dirs.workspace = true
+futures-util.workspace = true
+handlebars.workspace = true
+notify.workspace = true
+quilix-config = { path = "../quilix-config" }
+quilix-mf = { path = "../quilix-mf" }
+quilix-router = { path = "../quilix-router" }
+quilix-utils = { path = "../quilix-utils" }
+reqwest.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+tower-http.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+walkdir.workspace = true
+which.workspace = true
