@@ -14,16 +14,15 @@ const arch = process.arch;
 function getBinaryName() {
   const isWindows = platform === 'win32';
   const isMac = platform === 'darwin';
-  const isArm = arch === 'arm64';
 
   if (isMac) {
-    return isArm ? 'quilix-macos-arm64' : 'quilix-macos-x64';
+    return arch === 'arm64' ? 'quilix-macos-arm64' : 'quilix-macos-x64';
   }
   if (isWindows) {
     return 'quilix-win-x64.exe';
   }
-  // Linux
-  return isArm ? 'quilix-linux-arm64' : 'quilix-linux-x64';
+  // Linux (x64 only for now)
+  return 'quilix-linux-x64';
 }
 
 function getBinaryPath() {
