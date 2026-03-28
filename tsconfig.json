@@ -18,5 +18,6 @@
     "composite": false,
     "noEmit": true
   },
-  "exclude": ["node_modules", "dist", ". Quilix"]
+  "include": ["global.d.ts", "packages/**/*.ts", "packages/**/*.tsx", "examples/**/*.ts", "examples/**/*.tsx"],
+  "exclude": ["node_modules", "dist", ".quilix"]
 }

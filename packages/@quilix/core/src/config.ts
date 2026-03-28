@@ -11,6 +11,7 @@ export interface PluginConfig {
 export interface ModuleFederationConfig {
   name: string;
   remotes?: Record<string, string>;
+  exposes?: Record<string, string>;
   shared?: string[];
 }
 
@@ -21,6 +22,7 @@ export function defineConfig(config: QuilixConfig): QuilixConfig {
 export interface ModuleFederationOptions {
   name: string;
   remotes?: Record<string, string>;
+  exposes?: Record<string, string>;
   shared?: string[];
 }
 
