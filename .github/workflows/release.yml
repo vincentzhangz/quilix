@@ -45,15 +45,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # Publish @quilix/rspack-plugin
-      - name: Publish @quilix/rspack-plugin
-        if: success()
-        run: |
-          cd packages/@quilix/rspack-plugin
-          npm publish --access public --provenance --tag latest
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       # Publish @quilix/create-app
       - name: Publish @quilix/create-app
         if: success()
