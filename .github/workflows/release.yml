@@ -103,7 +103,15 @@ jobs:
       - name: Build
         run: |
           cargo build --release --package quilix-cli --target ${{ matrix.target }}
-          cp target/${{ matrix.target }}/release/quilix ${{ matrix.artifact }}
+        shell: bash
+
+      - name: Copy binary (Windows)
+        if: matrix.target == 'x86_64-pc-windows-gnu'
+        run: cp target/x86_64-pc-windows-gnu/release/quilix.exe quilix-win-x64.exe
+
+      - name: Copy binary (Unix)
+        if: matrix.target != 'x86_64-pc-windows-gnu'
+        run: cp target/${{ matrix.target }}/release/quilix ${{ matrix.artifact }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
