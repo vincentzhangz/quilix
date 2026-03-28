@@ -63,14 +63,37 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  # Publish Rust crate to crates.io
-  publish-rust:
-    name: Publish Rust crate
-    runs-on: ubuntu-latest
-    environment: release
-    permissions:
-      contents: read
-      id-token: write
+      # Publish @quilix/cli
+      - name: Publish @quilix/cli
+        if: success()
+        run: |
+          cd packages/@quilix/cli
+          npm publish --access public --provenance --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  # Build Rust CLI for multiple platforms
+  build-rust:
+    name: Build Rust CLI
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact: quilix-linux-x64
+          - os: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+            artifact: quilix-linux-arm64
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact: quilix-macos-x64
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact: quilix-macos-arm64
+          - os: windows-latest
+            target: x86_64-pc-windows-gnu
+            artifact: quilix-win-x64.exe
     steps:
       - uses: actions/checkout@v4
 
@@ -78,20 +101,23 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
+          targets: ${{ matrix.target }}
 
-      - name: Cache cargo
-        uses: Swatinem/rust-cache@v2
-
-      - name: Publish quilix-cli
+      - name: Build
         run: |
-          cargo publish --package quilix-cli --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          cargo build --release --package quilix-cli --target ${{ matrix.target }}
+          cp target/${{ matrix.target }}/release/quilix ${{ matrix.artifact }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
 
   # Create GitHub Release
   create-release:
     name: Create GitHub Release
-    needs: [publish-npm, publish-rust]
+    needs: [publish-npm, build-rust]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -104,6 +130,16 @@ jobs:
         env:
           tag: ${{ github.ref_name }}
 
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: quilix-*
+          path: dist
+          merge-multiple: true
+
+      - name: List artifacts
+        run: ls -la dist/
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
@@ -114,5 +150,6 @@ jobs:
           files: |
             CHANGELOG.md
             README.md
+            dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
