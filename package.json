@@ -1,0 +1,24 @@
+{
+  "name": "quilix",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "packages/@quilix/*",
+    "examples/basic",
+    "examples/micro-fe/host",
+    "examples/micro-fe/remote"
+  ],
+  "scripts": {
+    "build:rust": "cargo build --workspace",
+    "build:cli": "cargo build --package quilix-cli --release",
+    "dev": "cargo run --package quilix-cli -- dev",
+    "lint": "quilix lint"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

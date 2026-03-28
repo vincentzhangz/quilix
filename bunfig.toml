@@ -1,0 +1,7 @@
+[install]
+# Link local packages from workspaces
+linkLocalPackages = true
+
+[install.workspaces]
+# Enable bun workspace support
+enabled = true

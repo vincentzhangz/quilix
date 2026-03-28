@@ -1,0 +1,15 @@
+{
+  "name": "create-quilix-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "create-quilix-app": "./bin.js"
+  },
+  "scripts": {
+    "build": "echo 'No build step required'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

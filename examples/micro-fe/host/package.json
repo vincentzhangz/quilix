@@ -1,0 +1,29 @@
+{
+  "name": "quilix-micro-fe-host",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "quilix dev",
+    "build": "quilix build",
+    "preview": "quilix preview",
+    "lint": "quilix lint"
+  },
+  "dependencies": {
+    "@quilix/core": "workspace:*",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@rspack/cli": "^1.0.0",
+    "@rspack/core": "^1.7.10",
+    "@rspack/plugin-html": "^0.5.8",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@tailwindcss/postcss": "^4.2.2",
+    "postcss": "^8.5.8",
+    "postcss-loader": "^8.2.1",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.9.3"
+  }
+}
