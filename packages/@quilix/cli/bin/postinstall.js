@@ -23,16 +23,15 @@ const arch = process.arch;
 function getBinaryName() {
   const isWindows = platform === 'win32';
   const isMac = platform === 'darwin';
-  const isArm = arch === 'arm64';
 
   if (isMac) {
-    return isArm ? 'quilix-macos-arm64' : 'quilix-macos-x64';
+    return arch === 'arm64' ? 'quilix-macos-arm64' : 'quilix-macos-x64';
   }
   if (isWindows) {
     return 'quilix-win-x64.exe';
   }
-  // Linux
-  return isArm ? 'quilix-linux-arm64' : 'quilix-linux-x64';
+  // Linux (x64 only for now)
+  return 'quilix-linux-x64';
 }
 
 function getBinaryPath() {
@@ -118,7 +117,9 @@ async function main() {
     const asset = release.assets.find(a => a.name === binaryName);
 
     if (!asset) {
-      throw new Error(`Binary not found: ${binaryName}`);
+      console.warn(`Binary not found for platform: ${binaryName}`);
+      console.warn('You can install via cargo: cargo install quilix-cli');
+      return;
     }
 
     const installDir = resolve(__dirname, '..', 'bin');
@@ -128,6 +129,12 @@ async function main() {
     await downloadFile(asset.browser_download_url, binaryPath);
     console.log('Quilix CLI installed successfully!');
   } catch (error) {
+    if (error.message.includes('404') || error.message.includes('Failed to get release info')) {
+      console.warn('Quilix CLI binary not available yet for this platform.');
+      console.warn('You can install via cargo: cargo install quilix-cli');
+      console.warn('Or build from source: cargo build --release --package quilix-cli');
+      return;
+    }
     console.error('Failed to install Quilix CLI:', error.message);
     console.error('You can install via cargo: cargo install quilix-cli');
     process.exit(1);

@@ -82,9 +82,6 @@ jobs:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             artifact: quilix-linux-x64
-          - os: ubuntu-latest
-            target: aarch64-unknown-linux-gnu
-            artifact: quilix-linux-arm64
           - os: macos-latest
             target: x86_64-apple-darwin
             artifact: quilix-macos-x64
